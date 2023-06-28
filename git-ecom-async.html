@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let cart=['shirt','shoe','cap']
+           function createOrder(item){
+    return new Promise((resolve,reject)=>{
+        if(item){
+            setTimeout(()=>{
+                let orderId = 65240
+                console.log("order placed for item :"+item+"  order id ="+orderId)
+                resolve(orderId)
+            },2000)
+        }else{
+            reject("cart is empty")
+        }
+    })
+   }
+   let paymentGateWay =(id)=>true
+   function proceedToPayment(orderid){
+    return new Promise((resolve,reject)=>{
+        if(paymentGateWay(orderid)){
+            setTimeout(()=>{
+                payId=89789
+                console.log(("payment successfull payment id:"+payId))
+                resolve(payId)
+            },3000)
+        }else{
+            reject("payment is failed")
+        }
+    })
+}
+
+function showOrderSummary(payid){
+    return new Promise((resolve,reject)=>{
+        if(payid){
+            setTimeout(()=>{
+                let obj={id:89789,
+                    item:'shirt',
+                    price:'$150'}
+                console.log("order summary:")
+                console.log(obj)
+                resolve(obj)
+            },1000)
+        }else{
+            reject("order summary cannot be gennerated")
+        }
+    })
+}
+let wardrobe=[1,2,3]
+function updateWardrobe(obj){
+    return new Promise((resolve,reject)=>{
+        if(wardrobe.length<=100){
+            setTimeout(()=>{
+                wardrobe.push(obj.item)
+                console.log('wardrobe :',wardrobe)
+                resolve(wardrobe)
+            },2000)
+        }else{
+            reject("wardrobe is full")
+        }
+    })
+}
+function viewOrderdet(orderdetails,item){
+    return new Promise((resolve,reject)=>{
+        if(orderdetails){
+            setTimeout(()=>{
+                let det ={order_id :orderdetails,
+                          order_item:item}
+                          console.log(det)
+                resolve(det)
+            },1000)
+        }else{
+            reject("order page loading failed")
+        }
+    })
+}
+
+   async function create(){
+    try {
+        let order = await createOrder(cart[1])
+        let vieworder = await viewOrderdet(order=false,cart[1])
+        .catch((err)=>{console.log(err,"continue with order")})
+        let payment = await proceedToPayment(order)
+        let summary = await showOrderSummary(payId)
+        await updateWardrobe(summary)
+    }
+    catch(err){
+        console.log(err,'error occured, cannot fullfill order')
+    }
+    finally{
+        console.log('order process completed')
+    }
+   }
+   create()
+    </script>
+</body>
+</html>

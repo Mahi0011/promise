@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+    let cart=['shirt','shoe','cap']
+           function createOrder(item){
+    return new Promise((resolve,reject)=>{
+        if(item){
+            setTimeout(()=>{
+                let orderId = 65240
+                resolve("order placed for item :"+item+"  order id ="+orderId)
+            },2000)
+        }else{
+            reject("cart is empty")
+        }
+    })
+   }
+   let paymentGateWay =(id)=>true
+   function proceedToPayment(orderid){
+    return new Promise((resolve,reject)=>{
+        if(paymentGateWay(orderid)){
+            setTimeout(()=>{
+                payId=89789
+                console.log(("payment successfull payment id:"+payId))
+                resolve(payId)
+            },3000)
+        }else{
+            reject("payment is failed")
+        }
+    })
+}
+
+function showOrderSummary(payid){
+    return new Promise((resolve,reject)=>{
+        if(payid){
+            setTimeout(()=>{
+                let obj={id:89789,
+                    item:'shirt',
+                    price:'$150'}
+                console.log("order summary:")
+                console.log(obj)
+                resolve(obj)
+            },1000)
+        }else{
+            reject("order summary cannot be gennerated")
+        }
+    })
+}
+let wardrobe=[1,2,3]
+function updateWardrobe(obj){
+    return new Promise((resolve,reject)=>{
+        if(wardrobe.length<=100){
+            setTimeout(()=>{
+                wardrobe.push(obj.item)
+                resolve(wardrobe)
+            },2000)
+        }else{
+            reject("wardrobe is full")
+        }
+    })
+}
+
+   createOrder(cart[1])
+   .then((item)=>{console.log(item)})
+//    .catch((err)=>{console.log(err,"error occured on placing order")})
+   .then((orderId)=>{return proceedToPayment(orderId)})
+//    .catch((err)=>{console.log(err,"error occured on payment")})
+   .then((payId)=>{return showOrderSummary(payId)})
+//    .catch((err)=>{err,'error generating order summary'})
+   .then((obj)=>{return updateWardrobe(obj)})
+   .then((wdb)=>{console.log(wdb)})
+   .catch((err)=>{console.log(err,'error occured, cannot fullfill order')})
+   .finally(()=>{console.log('order process completed')})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
